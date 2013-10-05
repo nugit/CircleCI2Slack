@@ -1,27 +1,30 @@
 var express = require("express");
-var requests = require('request');
+var qs = require('querystring');
+
 var app = express();
 app.use(express.logger());
+app.use(express.bodyParser());
 
 app.get('/', function(request, response) {
     response.redirect('http://ltc.io')
 });
 
-console.log('before')
+post_handler = function(payload) {
+    console.log(payload);
 
-console.log('after')
+}
 
-app.get('/build', function(request, response) {
-    response.send('Hello World!');
-    requests.post(
-        'http://dopeman.org/post/',
-        { form: { key: 'value' } },
-        function (error, response, body) {
-            if (!error && response.statusCode == 200) {
-                console.log(body)
-            }
-        }
-    );
+
+app.post('/build/', function(request, response) {
+
+    //post_handler('fuck yes');
+    console.log("Got response: " + response.statusCode);
+
+    console.log(request.body)
+    response.send(request.body);
+
+
+
 });
 
 var port = process.env.PORT || 5000;

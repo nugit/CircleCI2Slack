@@ -7,6 +7,6 @@
   "engines": {
     "node": "0.10.x",
     "npm": "1.2.x",
-    "request": "2.27.1"
+    "querystring" : "0.2.0"
   }
 }
