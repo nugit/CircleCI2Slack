@@ -10,20 +10,21 @@ app.get('/', function(request, response) {
 });
 
 post_handler = function(payload) {
-    console.log(payload);
+    data = JSON.stringify(payload)
+    console.log(data);
 
 }
 
+app.get('/build/', function(request, response) {
+    response.redirect('/')
+});
 
 app.post('/build/', function(request, response) {
 
-    //post_handler('fuck yes');
     console.log("Got response: " + response.statusCode);
-
-    console.log(request.body)
+    console.log("Response: " + request.body)
     response.send(request.body);
-
-
+    post_handler(request.body)
 
 });
 
