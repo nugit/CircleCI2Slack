@@ -11,8 +11,8 @@ app.get('/', function(request, response) {
 });
 
 post_handler = function(payload) {
-    //data = JSON.stringify(payload)
-    //console.log(data);
+
+    console.log(payload);
     requests.post('http://dopeman.org/post/', {form:payload})
 
 }
