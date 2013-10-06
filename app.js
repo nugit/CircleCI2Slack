@@ -9,7 +9,7 @@ app.use(express.logger());
 app.use(express.bodyParser());
 
 app.get('/', function(request, response) {
-    response.redirect('http://ltc.io')
+    response.send('Hi! Go Away!')
 });
 
 
