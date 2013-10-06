@@ -29,11 +29,12 @@ post_handler = function(payload) {
     message_string = message_string + "Commit url: " + payload['vcs_url'] + "/commit/" + payload['vcs_revision'] + "\n"
     message_string = message_string + "Build time: " + ( payload['build_time_millis'] / 1000 ) + " seconds" + "\n"
 
-    slack_org = "lunar"
-    slack_token = "sTktyXRvvWaJNxGELvkvBcbx"
+    slack_org = process.env.SLACK_ORGANIZATION
+    slack_token = process.env.SLACK_TOKEN
+    slack_channel = process.env.SLACK_CHANNEL;
+    slack_botname = process.env.SLACK_BOTNAME;
+
     slack_url = "https://" + slack_org + ".slack.com/services/hooks/incoming-webhook?token=" + slack_token
-    slack_channel = "#code";
-    slack_botname = "buildbot";
 
     slack_payload = {
         "text": message_string,
@@ -64,7 +65,9 @@ app.post('/build/', function(request, response) {
 
 });
 
-
+/*
+There has to be a better way to do this. Thoughts?
+*/
 
 if ((typeof process.env.SLACK_BOTNAME !== 'undefined' && process.env.SLACK_BOTNAME)||
     (typeof process.env.SLACK_CHANNEL !== 'undefined' && process.env.SLACK_CHANNEL)||
