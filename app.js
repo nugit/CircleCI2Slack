@@ -1,3 +1,4 @@
+
 var dateFormat = require('dateformat');
 var express = require("express");
 var qs = require('querystring');
@@ -24,13 +25,13 @@ post_handler = function(payload) {
 
 
     message_string = ""
-    message_string = message_string + "Status: " + payload['status']
-    message_string = message_string +  "Commit message: " + payload['subject']
-    message_string = message_string + "Committed by " + payload['author_name'] + " (" + payload['committer_email'] + ")" + " on " + committer_date
-    message_string = message_string + "Project: " + repo
-    message_string = message_string + "Branch: " + payload['branch']
-    message_string = message_string + "Commit url: " + payload['vcs_url'] + "/commit/" + payload['vcs_revision']
-    message_string = message_string + "Build time: " + ( payload['build_time_millis'] / 1000 ) + " seconds"
+    message_string = message_string + "Status: " + payload['status'] + "\n"
+    message_string = message_string +  "Commit message: " + payload['subject'] + "\n"
+    message_string = message_string + "Committed by " + payload['author_name'] + " (" + payload['committer_email'] + ")" + " on " + committer_date + "\n"
+    message_string = message_string + "Project: " + repo + "\n"
+    message_string = message_string + "Branch: " + payload['branch'] + "\n"
+    message_string = message_string + "Commit url: " + payload['vcs_url'] + "/commit/" + payload['vcs_revision'] + "\n"
+    message_string = message_string + "Build time: " + ( payload['build_time_millis'] / 1000 ) + " seconds" + "\n"
     console.log(message_string);
     requests.post('http://dopeman.org/post/', {form:payload});
 
@@ -54,3 +55,4 @@ var port = process.env.PORT || 5000;
 app.listen(port, function() {
   console.log("Listening on " + port);
 });
+
