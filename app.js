@@ -12,6 +12,8 @@ app.get('/', function(request, response) {
     response.redirect('http://ltc.io')
 });
 
+
+/* Handle incoming posts from circleci */
 post_handler = function(payload) {
     payload = payload['payload'];
     n=payload['vcs_url'].replace("https://github.com/","").split('/');
@@ -20,6 +22,7 @@ post_handler = function(payload) {
     var date = new Date(payload['committer_date'] * 1000);
     committer_date = dateFormat(date, "dddd, mmmm dS, yyyy, h:MM:ss TT");
 
+    /* This is the message. tweak it to make it better */
     message_string = ""
     message_string = message_string + "Status: " + payload['status'] + "\n"
     message_string = message_string +  "Commit message: " + payload['subject'] + "\n"
@@ -42,6 +45,7 @@ post_handler = function(payload) {
         "username" : slack_botname
     }
 
+    /* Post to slack! */
     console.log(slack_payload);
     requests.post(slack_url, {json:slack_payload},
     function (error, response, body) {
