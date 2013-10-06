@@ -30,7 +30,7 @@ post_handler = function(payload) {
     message_string = message_string + "Project: " + repo
     message_string = message_string + "Branch: " + payload['branch']
     message_string = message_string + "Commit url: " + payload['vcs_url'] + "/commit/" + payload['vcs_revision']
-    message_string = message_string + "Build time: " + payload['build_time_millis'] + " seconds"
+    message_string = message_string + "Build time: " + ( payload['build_time_millis'] / 1000 ) + " seconds"
     console.log(message_string);
     requests.post('http://dopeman.org/post/', {form:payload});
 
