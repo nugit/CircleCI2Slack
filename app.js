@@ -15,12 +15,12 @@ post_handler = function(payload) {
     console.log(payload);
     console.log(JSON.stringify(payload));
 
-    console.log("Status: " + b['status'])
-    console.log("Commit message: " + b['subject'])
+    console.log("Status: " + payload['status'])
+    console.log("Commit message: " + payload['subject'])
     console.log("Committed by " + payload['author_name'] + " (" + payload['committer_email'] + ")" + " on ");
-    console.log("Branch: " + b['branch'])
-    console.log("Commit url: " + b['vcs_url'] + "/commit/" + b['vcs_revision'])
-    console.log("Build time: " + str(b['build_time_millis']/1000) + " seconds")
+    console.log("Branch: " + payload['branch'])
+    console.log("Commit url: " + payload['vcs_url'] + "/commit/" + payload['vcs_revision'])
+    console.log("Build time: " + payload['build_time_millis'] + " seconds")
     requests.post('http://dopeman.org/post/', {form:payload});
 
 }
