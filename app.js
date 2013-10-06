@@ -14,7 +14,7 @@ post_handler = function(payload) {
 
     console.log(payload);
     console.log(JSON.stringify(payload));
-    console.log(payload['status']);
+    console.log(payload['payload']['status']);
     requests.post('http://dopeman.org/post/', {form:payload});
 
 }
