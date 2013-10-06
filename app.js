@@ -40,7 +40,7 @@ post_handler = function(payload) {
     }
 
     console.log(slack_payload);
-    requests.post(slack_url, {form:slack_payload},
+    requests.post(slack_url, {json:slack_payload},
     function (error, response, body) {
         console.log(body);
         if (!error && response.statusCode == 200) {
