@@ -45,7 +45,7 @@ post_handler = function(payload) {
         "username" : slack_botname
     }
     console.log(slack_payload);
-    requests.post('http://dopeman.org/post/', {form:slack_payload});
+    requests.post(slack_url, {form:slack_payload});
 
 }
 
