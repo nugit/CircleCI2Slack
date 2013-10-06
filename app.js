@@ -13,7 +13,9 @@ app.get('/', function(request, response) {
 post_handler = function(payload) {
 
     console.log(payload);
-    requests.post('http://dopeman.org/post/', {form:payload})
+    console.log(JSON.stringify(payload));
+    console.log(payload['status']);
+    requests.post('http://dopeman.org/post/', {form:payload});
 
 }
 
@@ -24,7 +26,8 @@ app.get('/build/', function(request, response) {
 app.post('/build/', function(request, response) {
 
     console.log("Got response: " + response.statusCode);
-    console.log("Response: " + request.body)
+
+    console.dir(request.body);
     response.send(request.body);
     post_handler(request.body)
 
