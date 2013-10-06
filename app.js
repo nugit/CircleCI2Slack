@@ -29,21 +29,20 @@ post_handler = function(payload) {
     message_string = message_string + "Commit url: " + payload['vcs_url'] + "/commit/" + payload['vcs_revision'] + "\n"
     message_string = message_string + "Build time: " + ( payload['build_time_millis'] / 1000 ) + " seconds" + "\n"
 
-    slack_url = "http://dopeman.org/post/"; //"https://lunar.slack.com/services/hooks/incoming-webhook?token=sTktyXRvvWaJNxGELvkvBcbx"
+    slack_url = "https://lunar.slack.com/services/hooks/incoming-webhook?token=sTktyXRvvWaJNxGELvkvBcbx"
     slack_channel = "#code";
     slack_botname = "buildbot";
 
-    slack_payload = {"payload" : {
+    slack_payload = {
         "text": message_string,
         "channel" : slack_channel,
         "username" : slack_botname
-    }}
-
-
+    }
 
     console.log(slack_payload);
-    requests.post(slack_url, {json:slack_payload},
+    requests.post(slack_url, {form:slack_payload},
     function (error, response, body) {
+        console.log(body);
         if (!error && response.statusCode == 200) {
             console.log(body)
         }
@@ -69,4 +68,5 @@ var port = process.env.PORT || 5000;
 app.listen(port, function() {
   console.log("Listening on " + port);
 });
+
 
