@@ -29,7 +29,9 @@ post_handler = function(payload) {
     message_string = message_string + "Commit url: " + payload['vcs_url'] + "/commit/" + payload['vcs_revision'] + "\n"
     message_string = message_string + "Build time: " + ( payload['build_time_millis'] / 1000 ) + " seconds" + "\n"
 
-    slack_url = "https://lunar.slack.com/services/hooks/incoming-webhook?token=sTktyXRvvWaJNxGELvkvBcbx"
+    slack_org = "lunar"
+    slack_token = "sTktyXRvvWaJNxGELvkvBcbx"
+    slack_url = "https://" + slack_org + ".slack.com/services/hooks/incoming-webhook?token=" + slack_token
     slack_channel = "#code";
     slack_botname = "buildbot";
 
@@ -57,16 +59,28 @@ app.get('/build/', function(request, response) {
 app.post('/build/', function(request, response) {
 
     console.log("Got response: " + response.statusCode);
-
-    console.dir(request.body);
-    response.send(request.body);
+    response.send("Thank you!");
     post_handler(request.body)
 
 });
 
-var port = process.env.PORT || 5000;
-app.listen(port, function() {
-  console.log("Listening on " + port);
-});
 
 
+if ((typeof process.env.SLACK_BOTNAME !== 'undefined' && process.env.SLACK_BOTNAME)||
+    (typeof process.env.SLACK_CHANNEL !== 'undefined' && process.env.SLACK_CHANNEL)||
+    (typeof process.env.SLACK_ORGANIZATION !== 'undefined' && process.env.SLACK_ORGANIZATION)||
+    (typeof process.env.SLACK_TOKEN !== 'undefined' && process.env.SLACK_TOKEN)
+    )
+{
+    var port = process.env.PORT || 5000;
+    app.listen(port, function() {
+        console.log("Listening on " + port);
+    });
+}else{
+    console.log("One of the required config variables missing:");
+    console.log("\tSLACK_BOTNAME: " + process.env.SLACK_BOTNAME);
+    console.log("\tSLACK_CHANNEL: " + process.env.SLACK_CHANNEL);
+    console.log("\tSLACK_ORGANIZATION: " + process.env.SLACK_ORGANIZATION);
+    console.log("\tSLACK_TOKEN: " + process.env.SLACK_TOKEN)
+    process.exit()
+}
