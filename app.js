@@ -14,15 +14,11 @@ app.get('/', function(request, response) {
 
 post_handler = function(payload) {
     payload = payload['payload'];
-    console.log(payload);
-    console.log(JSON.stringify(payload));
     n=payload['vcs_url'].replace("https://github.com/","").split('/');
     user = n[0];
     repo = n[1];
     var date = new Date(payload['committer_date'] * 1000);
-
     committer_date = dateFormat(date, "dddd, mmmm dS, yyyy, h:MM:ss TT");
-
 
     message_string = ""
     message_string = message_string + "Status: " + payload['status'] + "\n"
@@ -33,19 +29,20 @@ post_handler = function(payload) {
     message_string = message_string + "Commit url: " + payload['vcs_url'] + "/commit/" + payload['vcs_revision'] + "\n"
     message_string = message_string + "Build time: " + ( payload['build_time_millis'] / 1000 ) + " seconds" + "\n"
 
-
-
     slack_url = "https://lunar.slack.com/services/hooks/incoming-webhook?token=sTktyXRvvWaJNxGELvkvBcbx"
     slack_channel = "#code"
     slack_botname = "buildbot"
 
-    slack_payload = {
+    slack_payload = {"payload" : {
         "text": message_string,
         "channel" : slack_channel,
         "username" : slack_botname
-    }
+    }}
+
+
+
     console.log(slack_payload);
-    requests.post(slack_url, {form:slack_payload});
+    requests.post(slack_url, {json:slack_payload});
 
 }
 
