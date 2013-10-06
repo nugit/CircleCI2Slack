@@ -29,9 +29,9 @@ post_handler = function(payload) {
     message_string = message_string + "Commit url: " + payload['vcs_url'] + "/commit/" + payload['vcs_revision'] + "\n"
     message_string = message_string + "Build time: " + ( payload['build_time_millis'] / 1000 ) + " seconds" + "\n"
 
-    slack_url = "https://lunar.slack.com/services/hooks/incoming-webhook?token=sTktyXRvvWaJNxGELvkvBcbx"
-    slack_channel = "#code"
-    slack_botname = "buildbot"
+    slack_url = "http://dopeman.org/post/"; //"https://lunar.slack.com/services/hooks/incoming-webhook?token=sTktyXRvvWaJNxGELvkvBcbx"
+    slack_channel = "#code";
+    slack_botname = "buildbot";
 
     slack_payload = {"payload" : {
         "text": message_string,
