@@ -24,17 +24,9 @@ post_handler = function(payload) {
     committer_date = dateFormat(date, "dddd, mmmm dS, yyyy, h:MM:ss TT");
 
     /* This is the message. tweak it to make it better */
-    message_string = ""
-    message_string = message_string + "Status: " + payload['status'] + "\n"
-    message_string = message_string +  "Commit message: " + payload['subject'] + "\n"
-    message_string = message_string + "Committed by " + payload['author_name'] + " (" + payload['committer_email'] + ")" + " on " + committer_date + "\n"
-    message_string = message_string + "Project: " + repo + "\n"
-    message_string = message_string + "Branch: " + payload['branch'] + "\n"
-    message_string = message_string + "Commit url: " + payload['vcs_url'] + "/commit/" + payload['vcs_revision'] + "\n"
-    message_string = message_string + "Build time: " + ( payload['build_time_millis'] / 1000 ) + " seconds" + "\n"
-
 
     message_string = "["+repo + "/" + payload['branch'] + "] <"+ payload['vcs_url'] + "/commit/" + payload['vcs_revision'] +"|"+payload['vcs_revision'].substring(0,12)+">: " + payload['status'].toUpperCase() + ": " + payload['subject'] + " - " + payload['author_name']
+
     slack_org = process.env.SLACK_ORGANIZATION
     slack_token = process.env.SLACK_TOKEN
     slack_channel = process.env.SLACK_CHANNEL;
