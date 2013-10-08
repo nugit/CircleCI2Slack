@@ -32,6 +32,8 @@ post_handler = function(payload) {
     message_string = message_string + "Commit url: " + payload['vcs_url'] + "/commit/" + payload['vcs_revision'] + "\n"
     message_string = message_string + "Build time: " + ( payload['build_time_millis'] / 1000 ) + " seconds" + "\n"
 
+
+    message_string = repo + "/" + payload['branch'] + ": " + payload['subject'] + " by " + payload['author_name'] + " " + payload['status'].toUpperCase() + "<"+ payload['vcs_url'] + "/commit/" + payload['vcs_revision'] +">"
     slack_org = process.env.SLACK_ORGANIZATION
     slack_token = process.env.SLACK_TOKEN
     slack_channel = process.env.SLACK_CHANNEL;
