@@ -27,6 +27,10 @@ post_handler = function(payload) {
 
     message_string = "["+repo + "/" + payload['branch'] + "] <"+ payload['vcs_url'] + "/commit/" + payload['vcs_revision'] +"|"+payload['vcs_revision'].substring(0,12)+">: " + payload['status'].toUpperCase() + ": " + payload['subject'] + " - " + payload['author_name']
 
+    if(payload['status'] != 'SUCCESS' && payload['status'] != 'FIXED') {
+        message_string += " -- " + payload['build_url'];
+    }
+
     slack_org = process.env.SLACK_ORGANIZATION
     slack_token = process.env.SLACK_TOKEN
     slack_channel = process.env.SLACK_CHANNEL;
