@@ -9,7 +9,7 @@ app.use(express.logger());
 app.use(express.bodyParser());
 
 app.get('/', function(request, response) {
-    response.send('Hi! Go Away!')
+    response.send('Hi! Go Away!');
 });
 
 String.prototype.trim=function(){return this.replace(/^\s+|\s+$/g, '');};
@@ -23,22 +23,28 @@ post_handler = function(payload) {
     var date = new Date(payload['committer_date'] * 1000);
     committer_date = dateFormat(date, "dddd, mmmm dS, yyyy, h:MM:ss TT");
 
+
+
     /* This is the message. tweak it to make it better */
 
-    message_string = "["+repo + "/" + payload['branch'] + "] <"+ payload['vcs_url'] + "/commit/" + payload['vcs_revision'] +"|"+payload['vcs_revision'].substring(0,12)+">: " + payload['status'].toUpperCase() + ": " + payload['subject'] + " - " + payload['author_name']
+    message_string = "["+repo + "/" + payload['branch'] + "] <"+ payload['vcs_url'] + "/commit/" + payload['vcs_revision'] +"|"+payload['vcs_revision'].substring(0,12)+">: " + payload['status'].toUpperCase() + ": " + payload['subject'] + " - " + payload['author_name'];
 
-    slack_org = process.env.SLACK_ORGANIZATION
-    slack_token = process.env.SLACK_TOKEN
+    if(payload['status'] != 'SUCCESS' && payload['status'] != 'FIXED') {
+        message_string += " -- " + payload['build_url'];
+    }
+
+    slack_org = process.env.SLACK_ORGANIZATION;
+    slack_token = process.env.SLACK_TOKEN;
     slack_channel = process.env.SLACK_CHANNEL;
     slack_botname = process.env.SLACK_BOTNAME;
 
-    slack_url = "https://" + slack_org + ".slack.com/services/hooks/incoming-webhook?token=" + slack_token
+    slack_url = "https://" + slack_org + ".slack.com/services/hooks/incoming-webhook?token=" + slack_token;
 
     slack_payload = {
         "text": message_string,
         "channel" : slack_channel,
         "username" : slack_botname
-    }
+    };
 
     /* Post to slack! */
     console.log(slack_payload);
@@ -46,21 +52,20 @@ post_handler = function(payload) {
     function (error, response, body) {
         console.log(body);
         if (!error && response.statusCode == 200) {
-            console.log(body)
+            console.log(body);
         }
     });
-
-}
+};
 
 app.get('/build/', function(request, response) {
-    response.redirect('/')
+    response.redirect('/');
 });
 
 app.post('/build/', function(request, response) {
 
     console.log("Got response: " + response.statusCode);
     response.send("Thank you!");
-    post_handler(request.body)
+    post_handler(request.body);
 
 });
 
@@ -83,6 +88,6 @@ if ((typeof process.env.SLACK_BOTNAME !== 'undefined' && process.env.SLACK_BOTNA
     console.log("\tSLACK_BOTNAME: " + process.env.SLACK_BOTNAME);
     console.log("\tSLACK_CHANNEL: " + process.env.SLACK_CHANNEL);
     console.log("\tSLACK_ORGANIZATION: " + process.env.SLACK_ORGANIZATION);
-    console.log("\tSLACK_TOKEN: " + process.env.SLACK_TOKEN)
-    process.exit()
+    console.log("\tSLACK_TOKEN: " + process.env.SLACK_TOKEN);
+    process.exit();
 }
