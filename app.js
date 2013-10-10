@@ -25,7 +25,7 @@ post_handler = function(payload) {
 
     /* This is the message. tweak it to make it better */
 
-    message_string = "["+repo + "/" + payload['branch'] + "] <"+ payload['vcs_url'] + "/commit/" + payload['vcs_revision'] +"|"+payload['vcs_revision'].substring(0,12)+">: " + payload['status'].toUpperCase() + ": " + payload['subject'] + " - " + payload['author_name']
+    message_string = "["+repo + "/" + payload['branch'] + "] <"+ payload['vcs_url'] + "/commit/" + payload['vcs_revision'] +"|"+payload['vcs_revision'].substring(0,12)+">/<"+payload['build_url']+"|"+payload['build_num']+">: " + payload['status'].toUpperCase() + ": " + payload['subject'] + " - " + payload['author_name']
 
     slack_org = process.env.SLACK_ORGANIZATION
     slack_token = process.env.SLACK_TOKEN
