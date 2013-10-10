@@ -84,11 +84,6 @@ if ((typeof process.env.SLACK_BOTNAME !== 'undefined' && process.env.SLACK_BOTNA
     console.log("\tSLACK_BOTNAME: " + process.env.SLACK_BOTNAME);
     console.log("\tSLACK_CHANNEL: " + process.env.SLACK_CHANNEL);
     console.log("\tSLACK_ORGANIZATION: " + process.env.SLACK_ORGANIZATION);
-<<<<<<< HEAD
-    console.log("\tSLACK_TOKEN: " + process.env.SLACK_TOKEN)
-    process.exit()
-=======
     console.log("\tSLACK_TOKEN: " + process.env.SLACK_TOKEN);
     process.exit();
->>>>>>> 6d447f8143ce1dca2a30926f49053559657a0ee8
 }
