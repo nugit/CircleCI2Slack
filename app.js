@@ -21,8 +21,9 @@ post_handler = function(payload) {
     n=payload['vcs_url'].replace("https://github.com/","").split('/');
     user = n[0];
     repo = n[1];
-    console.log(payload['committer_date'])
-    var date = new Date(payload['committer_date'] * 1000);
+    console.log(payload['committer_date']);
+    var date = new Date(payload['committer_date']);
+    console.log(data);
     committer_date = dateFormat(date, "dddd, mmmm dS, yyyy, h:MM:ss TT");
 
 
