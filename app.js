@@ -23,7 +23,7 @@ post_handler = function(payload) {
     repo = n[1];
     console.log(payload['committer_date']);
     var date = new Date(payload['committer_date']);
-    console.log(data);
+    console.log(date);
     committer_date = dateFormat(date, "dddd, mmmm dS, yyyy, h:MM:ss TT");
 
 
